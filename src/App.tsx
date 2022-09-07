@@ -1,56 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import Calendar from "components/calendar";
+import moment from "moment-timezone";
+import { useEffect, useState } from "react";
+import { useAppSelector } from "store";
+import Slices from "store/slices";
+
+import { ReservationItem } from "store/slices/reservations/reservationSlice";
 
 function App() {
+  const [currentDate, setCurrentDate] = useState<string>(moment().format());
+  const reservations = useAppSelector<ReservationItem[]>(
+    (s) => s[Slices.Reservation].reservations
+  );
+
+  const currentDateAsMoment = moment(currentDate);
+
+  const btnPrevMonth_onClick = () => {
+    setCurrentDate(moment(currentDate).add({ month: -1 }).format());
+  };
+
+  const btnNextMonth_onClick = () => {
+    setCurrentDate(moment(currentDate).add({ month: 1 }).format());
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+    <div className="min-h-screen flex flex-col justify-center items-center">
+      <h1 className="font-bold text-6xl letter-spacing-[-0.125em]">
+        Reservation System
+      </h1>
+      <div className="grid grid-cols-3">
+        <button onClick={btnPrevMonth_onClick}>Prev Month</button>
+        <strong className="text-center w-28">{currentDateAsMoment.format("MMM, YYYY")}</strong>
+        <button onClick={btnNextMonth_onClick}>Next Month</button>
+      </div>
+      <Calendar currentDate={currentDate} />
     </div>
   );
 }
