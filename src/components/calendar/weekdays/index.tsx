@@ -9,7 +9,12 @@ const WeekDays = ({ type }: Props) => {
     <>
       {(type === "short" ? moment.weekdaysShort() : moment.weekdays()).map(
         (wd) => (
-          <div key={wd} className="p-2 text-center">{wd}</div>
+          <div
+            key={wd}
+            className="p-2 uppercase flex items-center justify-center"
+          >
+            {wd}
+          </div>
         )
       )}
     </>

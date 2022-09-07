@@ -48,11 +48,11 @@ const Days = () => {
         const bg = left === 0 ? "bg-red-900" : "";
         return (
           <div key={index + prev} className={`p-2 text-center text-slate-400`}>
-            <div
+            <button
               className={`${bg} flex justify-center items-center rounded-full h-full w-full`}
             >
               {current.format("D")}
-            </div>
+            </button>
           </div>
         );
       })}
@@ -62,11 +62,11 @@ const Days = () => {
         const bg = left === 0 ? "bg-purple-300" : "";
         return (
           <div key={index + day} className={`p-2 text-center`}>
-            <div
+            <button
               className={`${bg} flex justify-center items-center rounded-full h-full w-full`}
             >
               {current.format("D")}
-            </div>
+            </button>
           </div>
         );
       })}
@@ -76,11 +76,11 @@ const Days = () => {
         const bg = left === 0 ? "bg-purple-300" : "";
         return (
           <div key={index + next} className={`p-2 text-center text-slate-400`}>
-            <div
+            <button
               className={`${bg} flex justify-center items-center rounded-full h-full w-full`}
             >
               {current.format("D")}
-            </div>
+            </button>
           </div>
         );
       })}
