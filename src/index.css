@@ -15,7 +15,12 @@ html * {
 }
 
 button {
-  @apply active:scale-90;
+  @apply active:scale-95;
+}
+
+.text-logo {
+  @apply text-3xl font-black;
+  letter-spacing: -0.1em;
 }
 
 @tailwind utilities;
