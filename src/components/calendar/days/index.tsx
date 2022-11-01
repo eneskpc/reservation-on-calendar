@@ -1,3 +1,4 @@
+import { AnimationProps, motion } from "framer-motion";
 import {
   GetFirstDayOfMonth,
   GetFirstDayOfNextMonth,
@@ -10,6 +11,13 @@ import moment from "moment-timezone";
 import { useAppSelector } from "store";
 
 const Days = () => {
+  const item: AnimationProps["variants"] = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+    },
+  };
   const currentISODate = useAppSelector<string>(
     (s) => s[Slices.Reservation].currentDate
   );
@@ -47,13 +55,17 @@ const Days = () => {
         const left = moment().startOf("day").diff(current, "d");
         const bg = left === 0 ? "bg-red-900" : "";
         return (
-          <div key={index + prev} className={`p-2 text-center text-slate-400`}>
+          <motion.div
+            variants={item}
+            key={index + prev}
+            className={`p-2 text-center text-slate-400`}
+          >
             <button
               className={`${bg} flex justify-center items-center rounded-full h-full w-full`}
             >
               {current.format("D")}
             </button>
-          </div>
+          </motion.div>
         );
       })}
       {allDays.map((day, index) => {
@@ -61,13 +73,17 @@ const Days = () => {
         const left = moment().startOf("day").diff(current, "d");
         const bg = left === 0 ? "bg-purple-300" : "";
         return (
-          <div key={index + day} className={`p-2 text-center`}>
+          <motion.div
+            variants={item}
+            key={index + day}
+            className={`p-2 text-center`}
+          >
             <button
               className={`${bg} flex justify-center items-center rounded-full h-full w-full`}
             >
               {current.format("D")}
             </button>
-          </div>
+          </motion.div>
         );
       })}
       {nextDays.map((next, index) => {
@@ -75,13 +91,17 @@ const Days = () => {
         const left = moment().startOf("day").diff(current, "d");
         const bg = left === 0 ? "bg-purple-300" : "";
         return (
-          <div key={index + next} className={`p-2 text-center text-slate-400`}>
+          <motion.div
+            variants={item}
+            key={index + next}
+            className={`p-2 text-center text-slate-400`}
+          >
             <button
               className={`${bg} flex justify-center items-center rounded-full h-full w-full`}
             >
               {current.format("D")}
             </button>
-          </div>
+          </motion.div>
         );
       })}
     </>

@@ -1,4 +1,17 @@
+import { AnimationProps, motion } from "framer-motion";
+import {
+  ExclamationCircleIcon,
+  ExclamationTriangleIcon,
+  QuestionMarkCircleIcon,
+} from "@heroicons/react/24/outline";
+
 import { ReactElement } from "react";
+
+export enum CustomIconType {
+  QUESTION,
+  ERROR,
+  WARNING,
+}
 
 type Button = {
   content: ReactElement;
@@ -6,19 +19,46 @@ type Button = {
 };
 
 type Props = {
-  icon: string;
+  icon: CustomIconType;
   title: string;
   children: ReactElement;
   buttons: Button[];
 };
 
-function CustomAlert({ children, title, buttons }: Props) {
+const GetIconByType = (type: CustomIconType) => {
+  switch (type) {
+    case CustomIconType.ERROR:
+      return <ExclamationTriangleIcon className="text-red-900 w-20 h-20" />;
+    case CustomIconType.WARNING:
+      return <ExclamationCircleIcon className="text-yellow-600 w-20 h-20" />;
+    case CustomIconType.QUESTION:
+      return <QuestionMarkCircleIcon className="text-blue-800 w-20 h-20" />;
+    default:
+      return null;
+  }
+};
+
+const CustomAlert = ({ children, title, buttons, icon }: Props) => {
+  const initialMotion: AnimationProps["initial"] = {
+    x: -1500,
+  };
+  const animation: AnimationProps["animate"] = {
+    x: 0,
+  };
+
   return (
     <div className="fixed bg-black/30 w-full h-full flex justify-center items-center">
-      <div className="bg-white rounded-md w-full max-w-2xl">
-        <div className="p-4 border-b border-slate-300">{title}</div>
-        <div className="p-4 border-b border-slate-300">{children}</div>
-        <div className="p-4 border-b border-slate-300">
+      <motion.div
+        initial={initialMotion}
+        animate={animation}
+        className="bg-white rounded-md w-full max-w-2xl"
+      >
+        <div className="p-4 text-4xl flex flex-col justify-center items-center">
+          {GetIconByType(icon)}
+          {title}
+        </div>
+        <div className="p-4 flex justify-center items-center">{children}</div>
+        <div className="p-4 flex justify-between items-center">
           {buttons.map((button, index) => {
             return (
               <button onClick={button.clickAction} key={index}>
@@ -27,9 +67,9 @@ function CustomAlert({ children, title, buttons }: Props) {
             );
           })}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
-}
+};
 
 export default CustomAlert;
