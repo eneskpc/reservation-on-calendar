@@ -1,12 +1,19 @@
-import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
+import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+
 import Slices from "./slices";
-import reservationSlice from "./slices/reservations/reservationSlice";
+import etkinlikIOSlice from "./slices/reservations/etkinlikIOSlice";
+import optionsSlice from "./slices/options/optionsSlice";
 
 export const store = configureStore({
   reducer: {
-    [Slices.Reservation]: reservationSlice
+    [Slices.EtkinlikIO]: etkinlikIOSlice,
+    [Slices.Options]: optionsSlice,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export type AppDispatch = typeof store.dispatch;

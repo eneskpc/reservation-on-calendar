@@ -1,40 +1,21 @@
-import { AnimationProps, motion } from "framer-motion";
-import CustomAlert, { CustomIconType } from "components/custom-alert";
-
-import Calendar from "components/calendar";
+import DeciderBody from "components/decider-body";
 import ReservationInMonth from "components/reservation-in-month";
 import SideBar from "components/sidebar";
+import { motion } from "framer-motion";
 
-function App() {
+const App = () => {
   return (
     <>
-      {false && (
-        <CustomAlert
-          title="Are you sure?"
-          icon={CustomIconType.QUESTION}
-          buttons={[
-            {
-              content: <div className="btn-primary">Selamlar</div>,
-              clickAction: () => console.log("selam"),
-            },
-            {
-              content: <div className="btn-primary">Selamlar</div>,
-              clickAction: () => console.log("selam"),
-            },
-          ]}
-        >
-          <div>Nasılsın</div>
-        </CustomAlert>
-      )}
-      <div className="flex flex-col h-screen w-full justify-center items-center bg-gradient-to-r to-purple-300 from-purple-600">
-        <motion.div className="grid grid-cols-4 w-full max-w-[1280px] max-h-[700px] shadow-2xl bg-white rounded-lg">
+      <div id="general-modal" className="fixed bg-black/30 w-full h-full flex justify-center items-center z-50 empty:hidden"></div>
+      <div className="flex flex-col h-screen max-h-screen p-10 w-full justify-center items-center bg-gradient-to-r to-purple-300 from-purple-600">
+        <motion.div className="grid grid-cols-4 lg:grid-cols-5 w-full h-screen shadow-2xl bg-white rounded-lg">
           <SideBar />
-          <Calendar />
+          <DeciderBody />
           <ReservationInMonth />
         </motion.div>
       </div>
     </>
   );
-}
+};
 
 export default App;

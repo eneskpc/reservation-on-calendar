@@ -11,7 +11,7 @@ const WeekDays = ({ type }: Props) => {
         (wd) => (
           <div
             key={wd}
-            className="p-2 uppercase flex items-center justify-center"
+            className="p-2 uppercase flex items-center justify-center text-purple-900"
           >
             {wd}
           </div>

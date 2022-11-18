@@ -3,12 +3,12 @@ import {
   GetFirstDayOfMonth,
   GetFirstDayOfNextMonth,
   GetLastDayOfMonth,
-  GetLastDayOfPrevMonth,
+  GetLastDayOfPrevMonth
 } from "helpers/date-helpers";
+import { useAppDispatch, useAppSelector } from "store";
 
-import Slices from "store/slices";
+import { changeCurrentDate } from "store/slices/reservations/etkinlikIOSlice";
 import moment from "moment-timezone";
-import { useAppSelector } from "store";
 
 const Days = () => {
   const item: AnimationProps["variants"] = {
@@ -18,11 +18,13 @@ const Days = () => {
       opacity: 1,
     },
   };
+
+  const dispatch = useAppDispatch();
+
   const currentISODate = useAppSelector<string>(
-    (s) => s[Slices.Reservation].currentDate
+    (s) => s.ETKINLIK_IO.currentDate
   );
 
-  let currentDate = moment(currentISODate);
   let currentDay = GetFirstDayOfMonth(moment(currentISODate));
   let lastDayOfMonth = GetLastDayOfMonth(moment(currentISODate));
   let firstDayOfNextMonth = GetFirstDayOfNextMonth(moment(currentISODate));
@@ -53,15 +55,21 @@ const Days = () => {
       {prevDays.map((prev, index) => {
         const current = moment(prev).startOf("day");
         const left = moment().startOf("day").diff(current, "d");
-        const bg = left === 0 ? "bg-red-900" : "";
+        const bg =
+          currentISODate === prev
+            ? "bg-red-400"
+            : left === 0
+            ? "bg-purple-400"
+            : "";
         return (
           <motion.div
             variants={item}
             key={index + prev}
-            className={`p-2 text-center text-slate-400`}
+            className={`p-2 text-center text-slate-500`}
           >
             <button
               className={`${bg} flex justify-center items-center rounded-full h-full w-full`}
+              onClick={() => dispatch(changeCurrentDate(prev))}
             >
               {current.format("D")}
             </button>
@@ -71,7 +79,12 @@ const Days = () => {
       {allDays.map((day, index) => {
         const current = moment(day).startOf("day");
         const left = moment().startOf("day").diff(current, "d");
-        const bg = left === 0 ? "bg-purple-300" : "";
+        const bg =
+          currentISODate === day
+            ? "bg-red-400"
+            : left === 0
+            ? "bg-purple-400"
+            : "";
         return (
           <motion.div
             variants={item}
@@ -79,7 +92,8 @@ const Days = () => {
             className={`p-2 text-center`}
           >
             <button
-              className={`${bg} flex justify-center items-center rounded-full h-full w-full`}
+              className={`${bg} flex justify-center items-center rounded-full h-full w-full text-purple-900`}
+              onClick={() => dispatch(changeCurrentDate(day))}
             >
               {current.format("D")}
             </button>
@@ -89,15 +103,21 @@ const Days = () => {
       {nextDays.map((next, index) => {
         const current = moment(next).startOf("day");
         const left = moment().startOf("day").diff(current, "d");
-        const bg = left === 0 ? "bg-purple-300" : "";
+        const bg =
+          currentISODate === next
+            ? "bg-red-400"
+            : left === 0
+            ? "bg-purple-400"
+            : "";
         return (
           <motion.div
             variants={item}
             key={index + next}
-            className={`p-2 text-center text-slate-400`}
+            className={`p-2 text-center text-slate-500`}
           >
             <button
               className={`${bg} flex justify-center items-center rounded-full h-full w-full`}
+              onClick={() => dispatch(changeCurrentDate(next))}
             >
               {current.format("D")}
             </button>

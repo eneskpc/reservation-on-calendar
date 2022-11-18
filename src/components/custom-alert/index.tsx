@@ -2,10 +2,11 @@ import { AnimationProps, motion } from "framer-motion";
 import {
   ExclamationCircleIcon,
   ExclamationTriangleIcon,
-  QuestionMarkCircleIcon,
+  QuestionMarkCircleIcon
 } from "@heroicons/react/24/outline";
 
 import { ReactElement } from "react";
+import { createPortal } from "react-dom";
 
 export enum CustomIconType {
   QUESTION,
@@ -19,13 +20,13 @@ type Button = {
 };
 
 type Props = {
-  icon: CustomIconType;
+  icon?: CustomIconType;
   title: string;
   children: ReactElement;
   buttons: Button[];
 };
 
-const GetIconByType = (type: CustomIconType) => {
+const GetIconByType = (type?: CustomIconType) => {
   switch (type) {
     case CustomIconType.ERROR:
       return <ExclamationTriangleIcon className="text-red-900 w-20 h-20" />;
@@ -46,29 +47,28 @@ const CustomAlert = ({ children, title, buttons, icon }: Props) => {
     x: 0,
   };
 
-  return (
-    <div className="fixed bg-black/30 w-full h-full flex justify-center items-center">
-      <motion.div
-        initial={initialMotion}
-        animate={animation}
-        className="bg-white rounded-md w-full max-w-2xl"
-      >
-        <div className="p-4 text-4xl flex flex-col justify-center items-center">
-          {GetIconByType(icon)}
-          {title}
-        </div>
-        <div className="p-4 flex justify-center items-center">{children}</div>
-        <div className="p-4 flex justify-between items-center">
-          {buttons.map((button, index) => {
-            return (
-              <button onClick={button.clickAction} key={index}>
-                {button.content}
-              </button>
-            );
-          })}
-        </div>
-      </motion.div>
-    </div>
+  return createPortal(
+    <motion.div
+      initial={initialMotion}
+      animate={animation}
+      className="bg-white rounded-md w-full max-w-2xl"
+    >
+      <div className="p-4 text-4xl flex flex-col justify-center items-center">
+        {GetIconByType(icon)}
+        {title}
+      </div>
+      <div className="p-4 flex justify-center items-center">{children}</div>
+      <div className="p-4 flex justify-between items-center">
+        {buttons.map((button, index) => {
+          return (
+            <button onClick={button.clickAction} key={index}>
+              {button.content}
+            </button>
+          );
+        })}
+      </div>
+    </motion.div>,
+    document.getElementById("general-modal") as HTMLElement
   );
 };
 

@@ -1,5 +1,6 @@
 enum Slices {
-  Reservation = "RESERVATION",
+  EtkinlikIO = "ETKINLIK_IO",
+  Options = "OPTIONS"
 }
 
 export default Slices;
