@@ -9,7 +9,7 @@ import Slices from "store/slices";
 export const eventsApi = createApi({
   reducerPath: Slices.EtkinlikIO,
   baseQuery: fetchBaseQuery({
-    baseUrl: `https://${GetAPI()}/api/v1`,
+    baseUrl: `${GetAPI()}/api/v1`,
     prepareHeaders: (headers, { getState }) => {
       return headers;
     },
