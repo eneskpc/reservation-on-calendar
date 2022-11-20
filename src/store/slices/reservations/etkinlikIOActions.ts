@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import EventCollection from "models/EtkinlikIO/EventCollection";
+import { GetAPI } from "../../../constants";
 import NameSlug from "models/EtkinlikIO/NameSlug";
 import ResponseBase from "models/common/ResponseBase";
 import Slices from "store/slices";
@@ -8,12 +9,8 @@ import Slices from "store/slices";
 export const eventsApi = createApi({
   reducerPath: Slices.EtkinlikIO,
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://localhost:49153/api/v1",
+    baseUrl: `https://${GetAPI()}/api/v1`,
     prepareHeaders: (headers, { getState }) => {
-      //   const token = (getState() as RootState).ETKINLIK_IO.;
-      //   if (token) {
-      //     headers.set("Authorization", `Bearer ${token}`);
-      //   }
       return headers;
     },
   }),
