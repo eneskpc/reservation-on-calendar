@@ -9,8 +9,8 @@ type OptionsState = {
 };
 
 const initialState = {
-  isMapOpen: false,
-  isCalendarOpen: true,
+  isMapOpen: true,
+  isCalendarOpen: false,
   currentLocation: null,
 } as OptionsState;
 

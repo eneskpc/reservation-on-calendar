@@ -1,9 +1,12 @@
 import { AnimationProps, motion } from "framer-motion";
 import { Bars4Icon, MapPinIcon } from "@heroicons/react/24/outline";
+import { useAppDispatch, useAppSelector } from "store";
 
 import Event from "models/EtkinlikIO/Event";
+import { FAVOURITE_EVENTS } from "../../constants";
 import moment from "moment-timezone";
-import { useAppSelector } from "store";
+import { setFavouriteEvents } from "store/slices/reservations/etkinlikIOSlice";
+import { useEffect } from "react";
 
 const ReservationInMonth = () => {
   const container: AnimationProps["variants"] = {
@@ -29,8 +32,20 @@ const ReservationInMonth = () => {
     (s) => s.ETKINLIK_IO.favouriteEvents
   );
 
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (favouriteEvents && favouriteEvents.length > 0) {
+      return;
+    }
+    let fe = localStorage.getItem(FAVOURITE_EVENTS);
+    if (localStorage.getItem(FAVOURITE_EVENTS)) {
+      dispatch(setFavouriteEvents(JSON.parse(fe || "")));
+    }
+  }, []);
+
   return (
-    <div className="bg-purple-200 flex flex-col justify-between rounded-r-md">
+    <div className="bg-purple-200 flex-col justify-between rounded-r-md hidden xl:flex">
       <h3 className="text-lg font-normal p-4">Events</h3>
       <div className="relative h-full">
         <motion.div

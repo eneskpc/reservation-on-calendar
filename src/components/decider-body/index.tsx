@@ -1,12 +1,12 @@
 import {
-    CalendarDaysIcon,
-    ChevronDoubleLeftIcon,
-    ChevronDoubleRightIcon,
-    MapIcon
+  CalendarDaysIcon,
+  ChevronDoubleLeftIcon,
+  ChevronDoubleRightIcon,
+  MapIcon
 } from "@heroicons/react/24/outline";
 import {
-    toggleCalendarOpen,
-    toggleMapOpen
+  toggleCalendarOpen,
+  toggleMapOpen
 } from "store/slices/options/optionsSlice";
 import { useAppDispatch, useAppSelector } from "store";
 
@@ -42,7 +42,7 @@ const DeciderBody = () => {
   };
 
   return (
-    <div className="col-span-2 lg:col-span-3 flex flex-col">
+    <div className="col-span-4 xl:col-span-3 flex flex-col">
       <div className="bg-purple-400 flex justify-between items-center">
         <button
           type="button"

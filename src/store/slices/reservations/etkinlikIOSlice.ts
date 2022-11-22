@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import Event from "models/EtkinlikIO/Event";
+import { FAVOURITE_EVENTS } from "../../../constants";
 import NameSlug from "models/EtkinlikIO/NameSlug";
 import Slices from "store/slices";
 import { eventsApi } from "./etkinlikIOActions";
@@ -40,10 +41,18 @@ const etkinlikIOSlice = createSlice({
         return;
       }
       state.favouriteEvents = [...state.favouriteEvents, action.payload];
+      localStorage.setItem(
+        FAVOURITE_EVENTS,
+        JSON.stringify(state.favouriteEvents)
+      );
     },
     removeFavouriteEvent: (state, action: PayloadAction<Event>) => {
       state.favouriteEvents = state.favouriteEvents.filter(
         (fe) => fe.id !== action.payload.id
+      );
+      localStorage.setItem(
+        FAVOURITE_EVENTS,
+        JSON.stringify(state.favouriteEvents)
       );
     },
   },

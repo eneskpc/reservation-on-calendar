@@ -34,18 +34,18 @@ const SideBar = () => {
           dispatch(setSelectedCategory(resp.data[0]));
         }
       });
-  }, [getAllCategories]);
+  }, [getAllCategories, dispatch]);
 
   if (categories.length === 0 || !selectedCategory) {
-    return <div className="bg-purple-700 text-white rounded-l-md"></div>;
+    return <div className="bg-purple-700 text-white rounded-l-none xl:rounded-l-md"></div>;
   }
 
   return (
-    <div className="bg-purple-700 text-white rounded-l-md">
+    <div className="bg-purple-700 text-white rounded-l-none xl:rounded-l-md hidden xl:block">
       <div className="flex flex-col h-full justify-between">
         <div className="flex justify-end items-center p-5 bg-purple-900 rounded-tl-full">
           <CakeIcon className="w-7 h-7" />
-          <strong className="text-3xl">E-vents.INFO</strong>
+          <strong className="text-3xl whitespace-nowrap">E-vents.INFO</strong>
         </div>
         <div className="relative h-full">
           <motion.div
@@ -65,7 +65,8 @@ const SideBar = () => {
                   onClick={() => dispatch(setSelectedCategory(c))}
                   key={index}
                 >
-                  <strong>{c.name}</strong> <small>({29})</small>
+                  <strong className="text-left">{c.name}</strong>{" "}
+                  <small>({29})</small>
                 </motion.button>
               );
             })}
